@@ -18,26 +18,38 @@ namespace WebAPI
             modelBuilder.Entity<OrderDetail>()
                 .HasKey(od => new { od.OrderId, od.ProductId });
 
-            modelBuilder.Entity<Order>();
-            //.HasOne(o => o.Customer);
-            //.WithMany(c => c.Orders)
-            //.HasForeignKey(o => o.CustomerId);
+            //modelBuilder.Entity<Order>();
+            ////.HasOne(o => o.Customer);
+            ////.WithMany(c => c.Orders)
+            ////.HasForeignKey(o => o.CustomerId);
 
-            modelBuilder.Entity<Order>();
-            //.HasOne(o => o.Employee);
-            //.WithMany(e => e.Orders)
-            //.HasForeignKey(o => o.EmployeeId);
+            //modelBuilder.Entity<Order>();
+            ////.HasOne(o => o.Employee);
+            ////.WithMany(e => e.Orders)
+            ////.HasForeignKey(o => o.EmployeeId);
 
-            modelBuilder.Entity<OrderDetail>();
-            //.HasOne(od => od.Order);
-            //.WithMany(o => o.OrderDetails)
-            //.HasForeignKey(od => od.OrderId);
+            //modelBuilder.Entity<OrderDetail>();
+            ////.HasOne(od => od.Order);
+            ////.WithMany(o => o.OrderDetails)
+            ////.HasForeignKey(od => od.OrderId);
 
-            modelBuilder.Entity<OrderDetail>();
-                //.HasOne(od => od.Product);
-                //.WithMany(p => p.OrderDetails)
-                //.HasForeignKey(od => od.ProductId);
+            //modelBuilder.Entity<OrderDetail>();
+            ////.HasOne(od => od.Product);
+            ////.WithMany(p => p.OrderDetails)
+            ////.HasForeignKey(od => od.ProductId);
+
+            // Composite primary key for OrderDetail
+            modelBuilder.Entity<OrderDetail>()
+                .HasKey(od => new { od.OrderId, od.ProductId });
+
+            // One-to-many: Order => OrderDetails
+            modelBuilder.Entity<Order>()
+                .HasMany(o => o.OrderDetails)
+                .WithOne()
+                .HasForeignKey(od => od.OrderId)
+                .OnDelete(DeleteBehavior.Cascade); 
         }
+
     }
 
 }

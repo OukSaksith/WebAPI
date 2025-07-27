@@ -19,9 +19,7 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
             return await _context.Orders
-                //.Include(o => o.Customer)
-                //.Include(o => o.Employee)
-                //.Include(o => o.OrderDetails)
+                .Include(o => o.OrderDetails)
                 .ToListAsync();
         }
 
@@ -29,9 +27,7 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<Order>> GetOrder(int id)
         {
             var order = await _context.Orders
-                //.Include(o => o.Customer)
-                //.Include(o => o.Employee)
-                //.Include(o => o.OrderDetails)
+                .Include(o => o.OrderDetails)
                 .FirstOrDefaultAsync(o => o.OrderId == id);
 
             if (order == null) return NotFound();
@@ -39,10 +35,19 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Order>> CreateOrder(Order order)
+        public async Task<ActionResult<Order>> CreateOrderWithDetails(Order order)
         {
+            if (order.OrderDetails != null && order.OrderDetails.Any())
+            {
+                //foreach (var detail in order.OrderDetails)
+                //{
+                //    detail.Order = order; // Set the reference to avoid duplicate OrderId set
+                //}
+            }
+
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
+
             return CreatedAtAction(nameof(GetOrder), new { id = order.OrderId }, order);
         }
 
@@ -59,13 +64,16 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(int id)
         {
-            var order = await _context.Orders.FindAsync(id);
+            var order = await _context.Orders
+                .Include(o => o.OrderDetails)
+                .FirstOrDefaultAsync(o => o.OrderId == id);
+
             if (order == null) return NotFound();
 
+            _context.OrderDetails.RemoveRange(order.OrderDetails); // delete child first
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
             return NoContent();
         }
     }
-
 }
