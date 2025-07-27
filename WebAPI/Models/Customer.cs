@@ -7,7 +7,7 @@
         public string Address { get; set; }
         public string Country { get; set; }
 
-        public ICollection<Order> Orders { get; set; }
+        //public ICollection<Order> Orders { get; set; }
 
     }
 }
