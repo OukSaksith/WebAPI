@@ -10,3 +10,16 @@ To install the EF Core CLI globally on your machine:
 
 ```bash
 dotnet tool install --global dotnet-ef
+```
+
+
+## 🛠️ Run EF Core Migrations
+
+```bash
+dotnet ef migrations add InitialCreate
+```
+
+```bash
+dotnet ef database update
+```
+
