@@ -18,23 +18,23 @@ namespace WebAPI
             modelBuilder.Entity<OrderDetail>()
                 .HasKey(od => new { od.OrderId, od.ProductId });
 
-            modelBuilder.Entity<Order>()
-                .HasOne(o => o.Customer);
+            modelBuilder.Entity<Order>();
+            //.HasOne(o => o.Customer);
             //.WithMany(c => c.Orders)
             //.HasForeignKey(o => o.CustomerId);
 
-            modelBuilder.Entity<Order>()
-                .HasOne(o => o.Employee);
-                //.WithMany(e => e.Orders)
-                //.HasForeignKey(o => o.EmployeeId);
+            modelBuilder.Entity<Order>();
+            //.HasOne(o => o.Employee);
+            //.WithMany(e => e.Orders)
+            //.HasForeignKey(o => o.EmployeeId);
 
-            modelBuilder.Entity<OrderDetail>()
-                .HasOne(od => od.Order)
-                .WithMany(o => o.OrderDetails)
-                .HasForeignKey(od => od.OrderId);
+            modelBuilder.Entity<OrderDetail>();
+            //.HasOne(od => od.Order);
+            //.WithMany(o => o.OrderDetails)
+            //.HasForeignKey(od => od.OrderId);
 
-            modelBuilder.Entity<OrderDetail>()
-                .HasOne(od => od.Product);
+            modelBuilder.Entity<OrderDetail>();
+                //.HasOne(od => od.Product);
                 //.WithMany(p => p.OrderDetails)
                 //.HasForeignKey(od => od.ProductId);
         }

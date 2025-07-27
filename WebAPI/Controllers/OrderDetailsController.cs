@@ -19,8 +19,8 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<IEnumerable<OrderDetail>>> GetOrderDetails()
         {
             return await _context.OrderDetails
-                .Include(od => od.Order)
-                .Include(od => od.Product)
+                //.Include(od => od.Order)
+                //.Include(od => od.Product)
                 .ToListAsync();
         }
 
@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
         {
             var details = await _context.OrderDetails
                 .Where(od => od.OrderId == orderId)
-                .Include(od => od.Product)
+                //.Include(od => od.Product)
                 .ToListAsync();
             return details;
         }

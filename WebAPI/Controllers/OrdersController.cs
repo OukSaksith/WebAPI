@@ -19,9 +19,9 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
             return await _context.Orders
-                .Include(o => o.Customer)
-                .Include(o => o.Employee)
-                .Include(o => o.OrderDetails)
+                //.Include(o => o.Customer)
+                //.Include(o => o.Employee)
+                //.Include(o => o.OrderDetails)
                 .ToListAsync();
         }
 
@@ -29,9 +29,9 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<Order>> GetOrder(int id)
         {
             var order = await _context.Orders
-                .Include(o => o.Customer)
-                .Include(o => o.Employee)
-                .Include(o => o.OrderDetails)
+                //.Include(o => o.Customer)
+                //.Include(o => o.Employee)
+                //.Include(o => o.OrderDetails)
                 .FirstOrDefaultAsync(o => o.OrderId == id);
 
             if (order == null) return NotFound();
